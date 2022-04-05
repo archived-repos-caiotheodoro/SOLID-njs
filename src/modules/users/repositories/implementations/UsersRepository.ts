@@ -19,16 +19,18 @@ class UsersRepository implements IUsersRepository {
   }
 
   create({ name, email }: ICreateUserDTO): User {
-    const user = {
-      id: uuidv4(),
-      name: name,
-      admin: false,
-      email: email,
+    let user = new User();
+   
+    user = {
+      ...user,
+      name,
+      email,
       created_at: new Date(),
-      updated_at: new Date(),
+      updated_at: new Date()
     }
 
     this.users.push(user)
+
 
     return user;
   }
@@ -42,10 +44,12 @@ class UsersRepository implements IUsersRepository {
   }
 
   turnAdmin(receivedUser: User): User {
-    const newUser = {...receivedUser, admin: true}
-    const indexOld = this.users.findIndex(item => item.id === newUser.id)
-    this.users[indexOld] = newUser
-    return newUser
+    const user = receivedUser
+    user.admin = true
+    user.updated_at = new Date()
+
+    return user
+ 
   }
 
   list(): User[] {
