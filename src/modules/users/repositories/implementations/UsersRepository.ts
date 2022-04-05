@@ -1,6 +1,6 @@
 import { User } from "../../model/User";
 import { IUsersRepository, ICreateUserDTO } from "../IUsersRepository";
-
+import { v4 as uuidv4 } from 'uuid'
 class UsersRepository implements IUsersRepository {
   private users: User[];
 
@@ -19,23 +19,37 @@ class UsersRepository implements IUsersRepository {
   }
 
   create({ name, email }: ICreateUserDTO): User {
-    // Complete aqui
+    const user = {
+      id: uuidv4(),
+      name: name,
+      admin: false,
+      email: email,
+      created_at: new Date(),
+      updated_at: new Date(),
+    }
+
+    this.users.push(user)
+
+    return user;
   }
 
   findById(id: string): User | undefined {
-    // Complete aqui
+    return this.users.find(user => user.id === id)
   }
 
   findByEmail(email: string): User | undefined {
-    // Complete aqui
+    return this.users.find(user => user.email === email)
   }
 
   turnAdmin(receivedUser: User): User {
-    // Complete aqui
+    const newUser = {...receivedUser, admin: true}
+    const indexOld = this.users.findIndex(item => item.id === newUser.id)
+    this.users[indexOld] = newUser
+    return newUser
   }
 
   list(): User[] {
-    // Complete aqui
+    return this.users
   }
 }
 

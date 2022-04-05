@@ -10,6 +10,12 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     // Complete aqui
+    const userIsAdmin = this.usersRepository.findById(user_id)
+    if (!userIsAdmin.admin){
+      throw Error("Only admins can list users.")
+    }
+    
+    return this.usersRepository.list();
   }
 }
 
