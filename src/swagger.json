@@ -1,85 +1,362 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Atlas",
-        "version": "1.0.0",
-        "OASVersion": "3.0.0",
-        "description": "Atlas is a RESTful API for managing the Atlas database.",
-        "termsOfService": "",
-        "contact": {
-            "name": "Atlas Team",
-            "url": ""
-        }
-    },
-    "paths" : {
-        "/users" : {
-            "post" : {
-                "tags" : [ "users" ],
-                "summary" : "Cria um novo usuário.",
-                "description" : "Cria um novo usuário.",
-                "operationId" : "createUser",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "description": "user name",
-                                        "example": "Rocketseat"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "description": "User email",
-                                        "example": "diego@rocketseat.com"
-                                    }
-                                }
-                            }
-                           
-                        }
-                    },
-                    "required": true
-                },
-                "responses" : {
-                    "201" : {
-                        "description" : "Operação realizada com sucesso.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                        "properties": {
-                                            "admin": {
-                                                "type": "string",
-                                                "description": "Permissão de administrador",
-                                                "example": false
-                                            },
-                                            "id": {
-                                                "type": "string",
-                                                "description": "Category id",
-                                                "example": 1
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "description": "Category name",
-                                                "example": "Category name  sample"
-                                            },
-                                            "description": {
-                                                "type": "string",
-                                                "description": "Category description",
-                                                "example": "Category description  sample"
-                                            }
-                                        }
-                                }
-                            }
-                        }
-                       
-                    },
-                    "400" : {
-                        "description" : "Invalid user supplied"
-                    }
-                }
-            }
-        }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Atlas",
+    "version": "1.0.0",
+    "OASVersion": "3.0.0",
+    "description": "Atlas is a RESTful API for managing the Atlas database.",
+    "termsOfService": "",
+    "contact": {
+      "name": "Atlas Team",
+      "url": ""
     }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Cria um novo usuário.",
+        "description": "Cria um novo usuário.",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "user name",
+                    "example": "Rocketseat"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "User email",
+                    "example": "diego@rocketseat.com"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean",
+                      "description": "Permissão de administrador",
+                      "example": false
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "user id",
+                      "example": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "user name",
+                      "example": "Rocketseat"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "user email",
+                      "example": "diego@rocketseat.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Category created at",
+                      "example": "2020-06-20T18:00:00.000Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "description": "Category updated at",
+                      "example": "2020-06-20T18:00:00.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email já sendo usado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Email",
+                      "example": "this email is already in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "user_id"
+            }
+          }
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "Lista todos os usuários.",
+        "description": "Lista todos os usuários.",
+        "operationId": "listUsers",
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean",
+                        "description": "Permissão de administrador",
+                        "example": false
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "user id",
+                        "example": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "user name",
+                        "example": "Rocketseat"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "user email",
+                        "example": "diego@rocketseat.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "description": "Category created at",
+                        "example": "2020-06-20T18:00:00.000Z"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "description": "Category updated at",
+                        "example": "2020-06-20T18:00:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuario sem permissão ou usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "you dont have permission to access this resource"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Perfil do usuário específico",
+        "description": "Perfil do usuário específico",
+        "operationId": "getUserProfile",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "user_id - ID do usuário"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean",
+                        "description": "Permissão de administrador",
+                        "example": false
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "user id",
+                        "example": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "user name",
+                        "example": "Rocketseat"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "user email",
+                        "example": "diego@rocketseat.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "description": "Category created at",
+                        "example": "2020-06-20T18:00:00.000Z"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "description": "Category updated at",
+                        "example": "2020-06-20T18:00:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "permission denied!",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "permission denied!"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not fund user",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "not fund user"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Torna admin um usuário",
+        "description": "Torna admin um usuário",
+        "operationId": "turnUserAdmin",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "Required id of User",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "1c747ce1-e6f7-4e32-864d-2ed04ee4f43b"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean",
+                        "description": "Permissão de administrador",
+                        "example": false
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "user id",
+                        "example": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "user name",
+                        "example": "Rocketseat"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "user email",
+                        "example": "diego@rocketseat.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "description": "Category created at",
+                        "example": "2020-06-20T18:00:00.000Z"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "description": "Category updated at",
+                        "example": "2020-06-20T18:00:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario não encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Usuario não encontrado"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
