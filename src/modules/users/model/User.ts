@@ -9,7 +9,7 @@ class User {
   updated_at: Date;
 
   constructor(){
-    if(!this.admin){
+    if(!this.id){
       this.id = uuidv4();
       this.admin = false;
     }

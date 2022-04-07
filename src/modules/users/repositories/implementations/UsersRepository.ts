@@ -20,7 +20,6 @@ class UsersRepository implements IUsersRepository {
 
   create({ name, email }: ICreateUserDTO): User {
     let user = new User();
-   
     user = {
       ...user,
       name,
