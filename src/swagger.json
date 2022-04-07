@@ -1,0 +1,85 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Atlas",
+        "version": "1.0.0",
+        "OASVersion": "3.0.0",
+        "description": "Atlas is a RESTful API for managing the Atlas database.",
+        "termsOfService": "",
+        "contact": {
+            "name": "Atlas Team",
+            "url": ""
+        }
+    },
+    "paths" : {
+        "/users" : {
+            "post" : {
+                "tags" : [ "users" ],
+                "summary" : "Cria um novo usuário.",
+                "description" : "Cria um novo usuário.",
+                "operationId" : "createUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "user name",
+                                        "example": "Rocketseat"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "User email",
+                                        "example": "diego@rocketseat.com"
+                                    }
+                                }
+                            }
+                           
+                        }
+                    },
+                    "required": true
+                },
+                "responses" : {
+                    "201" : {
+                        "description" : "Operação realizada com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "properties": {
+                                            "admin": {
+                                                "type": "string",
+                                                "description": "Permissão de administrador",
+                                                "example": false
+                                            },
+                                            "id": {
+                                                "type": "string",
+                                                "description": "Category id",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "description": "Category name",
+                                                "example": "Category name  sample"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "description": "Category description",
+                                                "example": "Category description  sample"
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                       
+                    },
+                    "400" : {
+                        "description" : "Invalid user supplied"
+                    }
+                }
+            }
+        }
+    }
+}
